@@ -1,0 +1,126 @@
+<html>
+{{template "header.tmpl.html"}}
+
+<body>
+  {{template "nav.tmpl.html"}}
+
+  <div class="jumbotron text-center">
+    <div class="container">
+      <h1>Teste1</h1>
+      <button>
+        <a href="/index/JSON">
+          Teste de JSON
+        </a>
+      </button>
+    </div>
+  </div>
+  <div class="container">
+
+    <div class="col-12">
+      <div class="col-12">
+        <h1>
+          Busca por usuario
+        </h1>
+      </div>
+      <div class="form-data col-md-6">
+        <label for="collection">Colecao</label>
+        <input type="text" id="collection">
+      </div>
+      <div class="form-data col-md-6">
+        <label for="objectID">ID do objeto</label>
+        <input type="text" id="objectID">
+      </div>
+      <div class="form-data col-12">
+        <div class="float-right">
+          <p>Todos os dados serão transmitidos via form data</p>
+          <button id="BotaoPost" class="btn btn-primary">Teste de POST</button>
+        </div>
+      </div>
+      <script>
+        $("#BotaoPost").click(function () {
+          alert(document.getElementById("collection").value + "\n" + document.getElementById("objectID").value);
+          if (document.getElementById("collection").value != "" && document.getElementById("objectID").value != "") {
+            $.ajax({
+              type: "POST",
+              url: "/index/POST",
+              dataType: "json",
+              data:
+              {
+                collection: document.getElementById("collection").value,
+                objectID: document.getElementById("objectID").value
+              },
+              success: function (data, status) {
+                document.getElementById("resposta_ID").innerHTML = data;
+              },
+            });
+          }
+        });
+      </script>
+      <div id="resposta_ID">
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="col-12">
+        <h1>
+          Busca por Colecao
+        </h1>
+      </div>
+      <div class="form-data col-12">
+        <label for="collectionName">Nome colecao</label>
+        <input type="text" id="collectionName">
+      </div>
+      <div class="form-data col-12">
+        <div class="float-right">
+          <button id="BotaoBuscaDadosCollection" class="btn btn-primary" onclick="VisualizarCollection()">Teste de POST</button>
+        </div>
+        <script>
+          function VisualizarCollection() {
+            if (document.getElementById("collectionName").value != "") {
+              window.open("/Collection/" + document.getElementById("collectionName").value)
+            }
+          }
+        </script>
+      </div>
+    </div>
+    <div class="col-12">
+      <div class="col-12">
+        <h1>
+          Salva usuario no banco
+        </h1>
+      </div>
+      <div class="form-data col-md-6">
+        <label for="nomeID">Nome</label>
+        <input type="text" id="nomeID">
+      </div>
+      <div class="form-data col-md-6">
+        <label for="faculdadeID">Faculdade</label>
+        <input type="text" id="faculdadeID">
+      </div>
+      <div class="form-data col-12">
+        <div class="float-right">
+          <p>Todos os dados serão transmitidos via form data</p>
+          <button id="BotaoSalvarPessoaPost" class="btn btn-primary">Salvar pessoa POST</button>
+        </div>
+      </div>
+      <script>
+        $("#BotaoSalvarPessoaPost").click(function () {
+          if (document.getElementById("nomeID").value != "" && document.getElementById("faculdadeID").value != "") {
+            $.ajax({
+              type: "POST",
+              url: "/Collection/POST",
+              dataType: "json",
+              data:
+              {
+                nome: document.getElementById("nomeID").value,
+                faculdade: document.getElementById("faculdadeID").value
+              },
+            });
+          }
+        });
+      </script>
+    </div>
+  </div>
+
+</body>
+
+</html>
